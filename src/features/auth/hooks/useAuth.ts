@@ -16,7 +16,7 @@ export function useAuth() {
   });
 
   return {
-    user: currentUser ?? user,
+    user: isAuthenticated ? (currentUser ?? user) : null,
     accessToken,
     isAuthenticated,
     isLoading,
