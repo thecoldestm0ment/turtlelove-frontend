@@ -99,35 +99,35 @@
 
 ### 4.1 API 및 타입
 
-- [ ] `features/auth/types/auth.types.ts` 정의
-- [ ] `features/auth/api/authApi.ts` 구현
-  - [ ] `sendVerificationCode` - 이메일 인증번호 발송
-  - [ ] `confirmVerificationCode` - 인증번호 확인
-  - [ ] `signup` - 회원가입
-  - [ ] `login` - 로그인
-  - [ ] `logout` - 로그아웃
-  - [ ] `refresh` - 토큰 갱신
+- [x] `features/auth/types/auth.types.ts` 정의
+- [x] `features/auth/api/authApi.ts` 구현
+  - [x] `sendVerificationCode` - 이메일 인증번호 발송
+  - [x] `confirmVerificationCode` - 인증번호 확인
+  - [x] `signup` - 회원가입
+  - [x] `login` - 로그인
+  - [x] `logout` - 로그아웃
+  - [x] `refresh` - 토큰 갱신
 
 ### 4.2 훅 구현
 
-- [ ] `useAuth` - 인증 상태 및 유저 정보
-- [ ] `useLogin` - 로그인 뮤테이션
-- [ ] `useSignup` - 회원가입 뮤테이션
-- [ ] `useLogout` - 로그아웃 뮤테이션
+- [x] `useAuth` - 인증 상태 및 유저 정보
+- [x] `useLogin` - 로그인 뮤테이션
+- [x] `useSignup` - 회원가입 뮤테이션 (useSendVerificationCode, useConfirmVerificationCode 포함)
+- [x] `useLogout` - 로그아웃 뮤테이션
 
 ### 4.3 컴포넌트 및 페이지
 
-- [ ] `LoginForm` 컴포넌트
-  - [ ] 이메일 입력
-  - [ ] 비밀번호 입력
-  - [ ] 유효성 검사 (Zod)
-  - [ ] 로그인 버튼
-- [ ] `LoginPage` 페이지
-- [ ] `SignupForm` 컴포넌트
-  - [ ] Step 1: 이메일 입력 및 인증 요청
-  - [ ] Step 2: OTP 입력 및 확인 (3분 타이머)
-  - [ ] Step 3: 비밀번호, 닉네임, 성별 입력
-- [ ] `SignupPage` 페이지
+- [x] `LoginForm` 컴포넌트
+  - [x] 이메일 입력
+  - [x] 비밀번호 입력
+  - [x] 유효성 검사 (Zod)
+  - [x] 로그인 버튼
+- [x] `LoginPage` 페이지
+- [x] `SignupForm` 컴포넌트
+  - [x] Step 1: 이메일 입력 및 인증 요청
+  - [x] Step 2: OTP 입력 및 확인 (3분 타이머)
+  - [x] Step 3: 비밀번호, 닉네임, 성별 입력
+- [x] `SignupPage` 페이지
 
 ---
 
