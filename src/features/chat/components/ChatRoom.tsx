@@ -15,6 +15,7 @@ export function ChatRoom({ room, currentUserId }: ChatRoomProps) {
   const { room_id, post_info } = room;
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const loadingOlderRef = useRef(false);
 
   const {
     data,
@@ -31,6 +32,10 @@ export function ChatRoom({ room, currentUserId }: ChatRoomProps) {
 
   // Auto-scroll to bottom on new messages
   useEffect(() => {
+    if (loadingOlderRef.current) {
+      loadingOlderRef.current = false;
+      return;
+    }
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
@@ -40,6 +45,11 @@ export function ChatRoom({ room, currentUserId }: ChatRoomProps) {
   const allMessages = data?.pages.flatMap((page) =>
     page.map((msg: any) => ({ ...msg, is_mine: msg.sender_id === currentUserId }))
   ) ?? [];
+
+  const handleFetchNextPage = () => {
+    loadingOlderRef.current = true;
+    fetchNextPage();
+  };
 
   const handleSendMessage = (content: string) => {
     try {
@@ -132,7 +142,7 @@ export function ChatRoom({ room, currentUserId }: ChatRoomProps) {
         {hasNextPage && (
           <div className="flex justify-center mb-4">
             <button
-              onClick={() => fetchNextPage()}
+              onClick={handleFetchNextPage}
               disabled={isFetchingNextPage}
               className={clsx(
                 'px-4 py-2 rounded-xl text-sm font-medium transition-all',

@@ -79,6 +79,11 @@ export function CommentSection({
       return;
     }
 
+    // 재진입 방지: 채팅방 생성 진행 중일 때 추가 호출 방지
+    if (isCreatingChatRoom) {
+      return;
+    }
+
     createChatRoom({
       post_id: postId,
       comment_id: comment.id,

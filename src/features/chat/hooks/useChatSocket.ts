@@ -3,6 +3,7 @@ import { useAuthStore } from '@/stores';
 import { getChatSocketService } from '../services/chatSocket';
 import type { ChatMessageSubscription, SendMessagePayload } from '../types/chat.types';
 import { useQueryClient } from '@tanstack/react-query';
+import type { Frame } from '@stomp/stompjs';
 
 interface UseChatSocketOptions {
   roomId?: number;
@@ -15,46 +16,55 @@ export function useChatSocket({ roomId, onMessage }: UseChatSocketOptions = {}) 
   const [error, setError] = useState<Error | null>(null);
   const queryClient = useQueryClient();
   const socketServiceRef = useRef<ReturnType<typeof getChatSocketService> | null>(null);
+  const onMessageRef = useRef(onMessage);
   const { accessToken } = useAuthStore();
+
+  // 최신 콜백 유지
+  useEffect(() => {
+    onMessageRef.current = onMessage;
+  }, [onMessage]);
+
+  // 콜백 생성 로직을 useCallback으로 추출
+  const createCallbacks = useCallback(() => ({
+    onConnected: () => {
+      setIsConnected(true);
+      setIsConnecting(false);
+      setError(null);
+    },
+    onDisconnected: () => {
+      setIsConnected(false);
+    },
+    onError: (frame: Frame) => {
+      setError(new Error(frame.headers?.message || 'WebSocket error'));
+      setIsConnecting(false);
+    },
+    onMessage: (message: ChatMessageSubscription) => {
+      // 메시지 캐시 무효화
+      if (message.room_id) {
+        queryClient.invalidateQueries({
+          queryKey: ['chat', 'messages', message.room_id],
+        });
+      }
+
+      // 채팅방 목록 무효화 (last_message, unread_count 업데이트)
+      queryClient.invalidateQueries({
+        queryKey: ['chat', 'rooms'],
+      });
+
+      onMessageRef.current?.(message);
+    },
+  }), [queryClient]);
 
   // Initialize socket service
   useEffect(() => {
-    if (!socketServiceRef.current && accessToken) {
-      socketServiceRef.current = getChatSocketService({
-        onConnected: () => {
-          setIsConnected(true);
-          setIsConnecting(false);
-          setError(null);
-        },
-        onDisconnected: () => {
-          setIsConnected(false);
-        },
-        onError: (frame) => {
-          setError(new Error(frame.headers?.message || 'WebSocket error'));
-          setIsConnecting(false);
-        },
-        onMessage: (message) => {
-          // 메시지 캐시 무효화
-          if (message.room_id) {
-            queryClient.invalidateQueries({
-              queryKey: ['chat', 'messages', message.room_id],
-            });
-          }
+    if (!accessToken) return;
 
-          // 채팅방 목록 무효화 (last_message, unread_count 업데이트)
-          queryClient.invalidateQueries({
-            queryKey: ['chat', 'rooms'],
-          });
-
-          onMessage?.(message);
-        },
-      });
-    }
+    socketServiceRef.current = getChatSocketService(createCallbacks());
 
     return () => {
       // Cleanup: don't destroy on unmount
     };
-  }, [accessToken, onMessage, queryClient]);
+  }, [accessToken, createCallbacks]);
 
   // Connect/Disconnect based on auth
   useEffect(() => {

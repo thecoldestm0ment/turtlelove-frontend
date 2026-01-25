@@ -10,7 +10,7 @@ TurtleLove 1:1 실시간 채팅 기능을 위한 WebSocket(STOMP) 백엔드 사�
 
 ### 1.1 엔드포인트
 
-```
+```text
 ws://localhost:8080/ws
 ```
 
@@ -20,7 +20,7 @@ ws://localhost:8080/ws
 
 STOMP CONNECT 프레임에 JWT Bearer token 포함:
 
-```
+```text
 CONNECT
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
@@ -38,7 +38,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 
 클라이언트가 채팅방 구독:
 
-```
+```text
 SUBSCRIBE
 id:sub-0
 destination:/topic/chat.room.1
@@ -53,7 +53,7 @@ destination:/topic/chat.room.1
 
 클라이언트가 메시지 전송:
 
-```
+```text
 SEND
 destination:/app/chat.send
 content-type:application/json
@@ -97,7 +97,7 @@ content-type:application/json
 
 **MESSAGE Frame**:
 
-```
+```text
 MESSAGE
 destination:/topic/chat.room.1
 content-type:application/json
@@ -129,7 +129,7 @@ content-type:application/json
 
 #### 4.1.1 접속 알림 (TYPING indicator 등)
 
-```
+```text
 MESSAGE
 destination:/topic/chat.room.1
 content-type:application/json
@@ -156,7 +156,7 @@ content-type:application/json
 
 **STOMP Heartbeat 설정**:
 
-```
+```text
 CONNECT
 heart-beat:20000,20000
 ```
@@ -174,7 +174,7 @@ heart-beat:20000,20000
 
 ### 6.1 ERROR Frame 예시
 
-```
+```text
 ERROR
 message:Forbidden
 content-type:application/json
@@ -200,7 +200,7 @@ content-type:application/json
 
 ### 7.1 REST API (기존 명세 유지)
 
-```
+```text
 POST   /api/chats/rooms           - 채팅방 생성
 GET    /api/chats/rooms           - 내 채팅방 목록
 GET    /api/chats/rooms/{id}/messages - 메시지 내역 (커서 기반 페이지네이션)
@@ -277,7 +277,7 @@ CREATE INDEX idx_messages_room_created ON chat_messages(room_id, created_at DESC
 
 **제안 2**: 마지막 메시지를 읽었을 때 (WebSocket)
 - 별도의 "메시지 읽음" WebSocket 메시지 도입
-```
+```text
 SEND
 destination:/app/chat.read
 {"roomId": 1, "messageId": 123}

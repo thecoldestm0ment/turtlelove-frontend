@@ -9,7 +9,9 @@ export function ChatListPage() {
   // WebSocket 연결 (실시간 업데이트)
   useChatSocket({
     onMessage: (message) => {
-      console.log('New message received:', message);
+      if (import.meta.env.DEV) {
+        console.log('New message received:', message);
+      }
       // 방 목록은 useChatSocket에서 자동 무효화됨
     },
   });

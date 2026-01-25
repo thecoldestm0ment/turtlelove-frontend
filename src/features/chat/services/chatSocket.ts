@@ -94,7 +94,9 @@ export class ChatSocketService {
     });
 
     this.subscriptions.set(destination, subscription);
-    console.log(`[ChatSocket] Subscribed to room ${roomId}`);
+    if (import.meta.env.DEV) {
+      console.log(`[ChatSocket] Subscribed to room ${roomId}`);
+    }
   }
 
   /**
@@ -107,7 +109,9 @@ export class ChatSocketService {
     if (subscription) {
       subscription.unsubscribe();
       this.subscriptions.delete(destination);
-      console.log(`[ChatSocket] Unsubscribed from room ${roomId}`);
+      if (import.meta.env.DEV) {
+        console.log(`[ChatSocket] Unsubscribed from room ${roomId}`);
+      }
     }
   }
 
@@ -149,6 +153,17 @@ export class ChatSocketService {
       this.connect(token);
     }, 1000);
   }
+
+  /**
+   * 콜백 함수 업데이트
+   * @param callbacks - 새로운 콜백 함수들
+   */
+  setCallbacks(callbacks: ChatSocketCallbacks): void {
+    if (import.meta.env.DEV) {
+      console.warn('[ChatSocket] Callbacks are being updated on existing instance');
+    }
+    this.callbacks = callbacks;
+  }
 }
 
 // Singleton 패턴
@@ -157,6 +172,8 @@ let socketServiceInstance: ChatSocketService | null = null;
 export function getChatSocketService(callbacks: ChatSocketCallbacks): ChatSocketService {
   if (!socketServiceInstance) {
     socketServiceInstance = new ChatSocketService(callbacks);
+  } else {
+    socketServiceInstance.setCallbacks(callbacks);
   }
   return socketServiceInstance;
 }
