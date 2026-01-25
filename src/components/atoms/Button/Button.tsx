@@ -70,7 +70,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const actualLoading = asChild ? false : loading;
 
     if (asChild && loading) {
-      console.warn('Button: "loading" prop cannot be used with "asChild". Ignoring loading state.');
+      console.warn(
+        'Button: "loading" prop cannot be used with "asChild". ' +
+        'Loading spinner will be hidden, but disabled state remains.'
+      );
     }
 
     const Comp = asChild ? Slot : 'button';
