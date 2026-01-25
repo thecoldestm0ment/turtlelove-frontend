@@ -135,39 +135,39 @@
 
 ### 5.1 API 및 타입
 
-- [ ] `features/posts/types/posts.types.ts` 정의
-- [ ] `features/posts/api/postsApi.ts` 구현
-  - [ ] `getPostList` - 목록 조회 (카테고리, 페이지네이션)
-  - [ ] `getPostDetail` - 상세 조회
-  - [ ] `createPost` - 작성
-  - [ ] `updatePost` - 수정
-  - [ ] `deletePost` - 삭제
+- [x] `features/posts/types/posts.types.ts` 정의
+- [x] `features/posts/api/postsApi.ts` 구현
+  - [x] `getList` - 목록 조회 (카테고리, 페이지네이션)
+  - [x] `getDetail` - 상세 조회
+  - [x] `create` - 작성
+  - [x] `update` - 수정
+  - [x] `delete` - 삭제
 
 ### 5.2 훅 구현
 
-- [ ] `usePosts` - 게시글 목록 쿼리 (무한스크롤)
-- [ ] `usePost` - 게시글 상세 쿼리
-- [ ] `useCreatePost` - 작성 뮤테이션
-- [ ] `useUpdatePost` - 수정 뮤테이션
-- [ ] `useDeletePost` - 삭제 뮤테이션
+- [x] `usePosts` - 게시글 목록 쿼리 (무한스크롤)
+- [x] `usePost` - 게시글 상세 쿼리
+- [x] `useCreatePost` - 작성 뮤테이션
+- [x] `useUpdatePost` - 수정 뮤테이션
+- [x] `useDeletePost` - 삭제 뮤테이션
 
 ### 5.3 컴포넌트
 
-- [ ] `PostCard` 컴포넌트 - 목록용 카드
-- [ ] `PostList` 컴포넌트 - 무한스크롤 목록
-- [ ] `PostForm` 컴포넌트 - 작성/수정 폼
-  - [ ] 제목 입력
-  - [ ] 본문 에디터
-  - [ ] 카테고리 선택
-  - [ ] 공개 범위 설정 (대학 숨기기, 성별 필터)
-- [ ] `PostDetail` 컴포넌트 - 상세 뷰
+- [x] `PostCard` 컴포넌트 - 목록용 카드
+- [x] `PostList` 컴포넌트 - 무한스크롤 목록
+- [x] `PostForm` 컴포넌트 - 작성/수정 폼
+  - [x] 제목 입력
+  - [x] 본문 에디터
+  - [x] 카테고리 선택
+  - [x] 공개 범위 설정 (대학 숨기기, 성별 필터)
+- [x] `PostDetailView` 컴포넌트 - 상세 뷰
 
 ### 5.4 페이지
 
-- [ ] `PostListPage` - 목록 페이지 (카테고리 탭, 정렬)
-- [ ] `PostDetailPage` - 상세 페이지
-- [ ] `PostCreatePage` - 작성 페이지
-- [ ] `PostEditPage` - 수정 페이지
+- [x] `PostListPage` - 목록 페이지 (카테고리 탭, 정렬)
+- [x] `PostDetailPage` - 상세 페이지
+- [x] `PostCreatePage` - 작성 페이지
+- [x] `PostEditPage` - 수정 페이지
 
 ---
 
