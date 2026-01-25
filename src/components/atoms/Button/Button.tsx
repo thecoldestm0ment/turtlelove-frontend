@@ -67,8 +67,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     // Slot(asChild)는 단 하나의 자식만 허용하므로 loading 스피너를 사용할 수 없음
-    const actualLoading = asChild ? false : loading;
-
     if (asChild && loading) {
       console.warn(
         'Button: "loading" prop cannot be used with "asChild". ' +
@@ -76,32 +74,47 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       );
     }
 
-    const Comp = asChild ? Slot : 'button';
+    const buttonClassName = cn(
+      'inline-flex',
+      'items-center',
+      'justify-center',
+      'gap-2',
+      'font-ui',
+      'font-medium',
+      'transition-all',
+      'duration-[var(--duration-normal)]',
+      'ease-out',
+      'disabled:cursor-not-allowed',
+      'disabled:opacity-60',
+      'touch-target',
+      variantStyles[variant],
+      sizeStyles[size],
+      className
+    );
 
+    // asChild일 때는 Slot을 사용하며 children만 전달 (단일 자식 요소만 허용)
+    if (asChild) {
+      const { type: _, ...restProps } = props;
+      return (
+        <Slot
+          ref={ref}
+          className={buttonClassName}
+          {...restProps}
+        >
+          {children}
+        </Slot>
+      );
+    }
+
+    // 일반 버튼일 때는 loading spinner와 children을 함께 렌더링
     return (
-      <Comp
+      <button
         ref={ref}
-        className={cn(
-          'inline-flex',
-          'items-center',
-          'justify-center',
-          'gap-2',
-          'font-ui',
-          'font-medium',
-          'transition-all',
-          'duration-[var(--duration-normal)]',
-          'ease-out',
-          'disabled:cursor-not-allowed',
-          'disabled:opacity-60',
-          'touch-target',
-          variantStyles[variant],
-          sizeStyles[size],
-          className
-        )}
+        className={buttonClassName}
         disabled={disabled || loading}
         {...props}
       >
-        {actualLoading && (
+        {loading && (
           <svg
             className="h-4 w-4 animate-spin"
             xmlns="http://www.w3.org/2000/svg"
@@ -124,7 +137,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           </svg>
         )}
         {children}
-      </Comp>
+      </button>
     );
   }
 );
