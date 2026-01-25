@@ -94,12 +94,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     // asChild일 때는 Slot을 사용하며 children만 전달 (단일 자식 요소만 허용)
     if (asChild) {
+      const { type: _, ...restProps } = props;
       return (
         <Slot
           ref={ref}
           className={buttonClassName}
-          disabled={disabled || loading}
-          {...props}
+          {...restProps}
         >
           {children}
         </Slot>
