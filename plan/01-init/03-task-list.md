@@ -201,38 +201,42 @@
 
 ### 7.1 API 및 타입
 
-- [ ] `features/chat/types/chat.types.ts` 정의
-- [ ] `features/chat/api/chatApi.ts` 구현
-  - [ ] `createChatRoom` - 채팅방 생성
-  - [ ] `getChatRooms` - 채팅방 목록
-  - [ ] `getChatMessages` - 메시지 내역
+- [x] `features/chat/types/chat.types.ts` 정의
+- [x] `features/chat/api/chatApi.ts` 구현
+  - [x] `createChatRoom` - 채팅방 생성
+  - [x] `getChatRooms` - 채팅방 목록
+  - [x] `getChatMessages` - 메시지 내역
 
 ### 7.2 WebSocket 서비스
 
-- [ ] `features/chat/services/chatSocket.ts` 구현
-  - [ ] STOMP 연결/해제
-  - [ ] 채팅방 구독/해제
-  - [ ] 메시지 발송
+- [x] `features/chat/services/chatSocket.ts` 구현
+  - [x] STOMP 연결/해제
+  - [x] 채팅방 구독/해제
+  - [x] 메시지 발송
 
 ### 7.3 훅 구현
 
-- [ ] `useChatRooms` - 채팅방 목록 쿼리
-- [ ] `useChatMessages` - 메시지 쿼리 (커서 기반 페이지네이션)
-- [ ] `useChatSocket` - WebSocket 연결 관리
+- [x] `useChatRooms` - 채팅방 목록 쿼리
+- [x] `useChatMessages` - 메시지 쿼리 (커서 기반 페이지네이션)
+- [x] `useCreateChatRoom` - 채팅방 생성 뮤테이션
+- [x] `useChatSocket` - WebSocket 연결 관리
 
 ### 7.4 컴포넌트
 
-- [ ] `ChatRoomCard` 컴포넌트 - 채팅방 목록 아이템
-- [ ] `ChatBubble` 컴포넌트 - 메시지 버블
-- [ ] `ChatRoom` 컴포넌트 - 채팅방 UI
-  - [ ] 메시지 목록 (자동 스크롤)
-  - [ ] 메시지 입력창
-  - [ ] 연결된 게시글 정보
+- [x] `ChatRoomCard` 컴포넌트 - 채팅방 목록 아이템
+- [x] `ChatBubble` 컴포넌트 - 메시지 버블
+- [x] `ChatInput` 컴포넌트 - 메시지 입력창
+- [x] `ConnectionStatus` 컴포넌트 - WebSocket 연결 상태
+- [x] `ChatRoom` 컴포넌트 - 채팅방 UI
+  - [x] 메시지 목록 (자동 스크롤)
+  - [x] 메시지 입력창
+  - [x] 연결된 게시글 정보
 
 ### 7.5 페이지
 
-- [ ] `ChatListPage` - 채팅방 목록 페이지
-- [ ] `ChatRoomPage` - 채팅방 페이지
+- [x] `ChatListPage` - 채팅방 목록 페이지
+- [x] `ChatRoomPage` - 채팅방 페이지
+- [x] `CommentSection` 채팅 요청 기능 연결
 
 ---
 

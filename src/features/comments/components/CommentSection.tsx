@@ -6,6 +6,7 @@ import { useCreateComment } from '../hooks/useCreateComment';
 import { useUpdateComment } from '../hooks/useUpdateComment';
 import { useDeleteComment } from '../hooks/useDeleteComment';
 import { CommentItem } from './CommentItem';
+import { useCreateChatRoom } from '@/features/chat/hooks';
 
 interface CommentSectionProps {
   postId: number;
@@ -34,6 +35,9 @@ export function CommentSection({
   const { mutate: deleteComment } = useDeleteComment({
     postId,
   });
+
+  // 채팅방 생성 훅
+  const { createRoom: createChatRoom, isPending: isCreatingChatRoom } = useCreateChatRoom();
 
   // 댓글 작성 핸들러
   const handleSubmit = () => {
@@ -69,10 +73,17 @@ export function CommentSection({
     deleteComment(commentId);
   };
 
-  // 채팅 요청 핸들러 (TODO: Phase 8 이후 연동)
-  const handleChatRequest = (_comment: Comment) => {
-    // TODO: Chat API 연결 (Phase 8 이후)
-    alert('채팅 기능은 곧 구현될 예정입니다.');
+  // 채팅 요청 핸들러
+  const handleChatRequest = (comment: Comment) => {
+    if (!isPostAuthor) {
+      return;
+    }
+
+    createChatRoom({
+      post_id: postId,
+      comment_id: comment.id,
+      receiver_id: comment.user_id,
+    });
   };
 
   return (
@@ -97,7 +108,7 @@ export function CommentSection({
             variant="primary"
             size="sm"
             onClick={handleSubmit}
-            disabled={!content.trim() || isCreating}
+            disabled={!content.trim() || isCreating || isCreatingChatRoom}
             loading={isCreating}
             className="bg-rose-400 hover:bg-rose-500"
           >
