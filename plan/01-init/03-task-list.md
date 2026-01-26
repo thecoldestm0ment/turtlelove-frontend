@@ -244,20 +244,20 @@
 
 ### 8.1 API 및 타입
 
-- [ ] `features/mypage/api/mypageApi.ts` 구현
-  - [ ] `getMyPosts` - 내가 쓴 글
-  - [ ] `getMyComments` - 내가 쓴 댓글
+- [x] `features/mypage/api/mypageApi.ts` 구현
+  - [x] `getMyPosts` - 내가 쓴 글
+  - [x] `getMyComments` - 내가 쓴 댓글
 
 ### 8.2 훅 구현
 
-- [ ] `useMyPosts` - 내 게시글 쿼리
-- [ ] `useMyComments` - 내 댓글 쿼리
+- [x] `useMyPosts` - 내 게시글 쿼리
+- [x] `useMyComments` - 내 댓글 쿼리
 
 ### 8.3 컴포넌트 및 페이지
 
-- [ ] `MyPostList` 컴포넌트
-- [ ] `MyCommentList` 컴포넌트
-- [ ] `MyPage` 페이지 (탭: 내 글, 내 댓글, 채팅)
+- [x] `MyPostList` 컴포넌트
+- [x] `MyCommentList` 컴포넌트
+- [x] `MyPage` 페이지 (탭: 내 글, 내 댓글, 채팅)
 
 ---
 
