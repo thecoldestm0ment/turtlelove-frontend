@@ -18,6 +18,9 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: './src/test/setup.ts',
     css: true,
+    fakeTimers: {
+      toFake: ['setTimeout', 'clearTimeout', 'setInterval', 'clearInterval', 'setImmediate', 'clearImmediate', 'Date'],
+    },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],

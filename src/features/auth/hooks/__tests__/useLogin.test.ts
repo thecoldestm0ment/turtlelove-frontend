@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { renderHook, waitFor } from '@testing-library/react'
 import { useLogin } from '../useLogin'
 import { authApi } from '@/features/auth/api/authApi'
@@ -8,11 +8,11 @@ import { createWrapper } from '@/test/test-utils'
 // Mock dependencies
 vi.mock('@/features/auth/api/authApi')
 vi.mock('@/stores')
+const mockNavigate = vi.hoisted(() => vi.fn())
+
 vi.mock('react-router-dom', () => ({
   useNavigate: () => mockNavigate,
 }))
-
-const mockNavigate = vi.fn()
 
 describe('useLogin 훅', () => {
   const mockSetAuth = vi.fn()
@@ -34,6 +34,11 @@ describe('useLogin 훅', () => {
       // Selector pattern support
       return selector ? selector(state) : state
     })
+  })
+
+  afterEach(() => {
+    // 타이머가 가짜 상태로 남아있으면 실제 타이머로 복원
+    vi.useRealTimers()
   })
 
   // 1. 성공적인 로그인 테스트
@@ -168,6 +173,8 @@ describe('useLogin 훅', () => {
   // 3. 로딩 상태 테스트
   describe('로딩 상태', () => {
     it('로그인 요청 중 isLoading이 true여야 함', async () => {
+      vi.useFakeTimers()
+
       vi.mocked(authApi.login).mockImplementation(
         () => new Promise(resolve => setTimeout(() => resolve({ accessToken: 'token', refreshToken: 'refresh' }), 100))
       )
@@ -176,15 +183,20 @@ describe('useLogin 훅', () => {
 
       result.current.login(mockCredentials)
 
-      // isLoading이 true가 되는 것을 기다림
-      await waitFor(() => {
-        expect(result.current.isLoading).toBe(true)
-      })
+      // 마이크로태스크를 처리하여 React Query가 상태를 업데이트하도록 함
+      await vi.advanceTimersByTimeAsync(0)
 
-      // 그 후 false가 되는 것을 확인
-      await waitFor(() => {
-        expect(result.current.isLoading).toBe(false)
-      })
+      // isLoading이 true가 되는 것을 확인
+      expect(result.current.isLoading).toBe(true)
+
+      // 타이머를 100ms 진행시켜 Promise가 resolve되도록 함
+      await vi.advanceTimersByTimeAsync(100)
+
+      // 모든 마이크로태스크가 완료될 때까지 대기
+      await vi.runAllTimersAsync()
+
+      // isLoading이 false가 되는 것을 확인
+      expect(result.current.isLoading).toBe(false)
     })
   })
 

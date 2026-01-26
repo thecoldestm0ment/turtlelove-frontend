@@ -265,10 +265,10 @@
 
 ### 9.1 테스트
 
-- [ ] Vitest 설정
-- [ ] React Testing Library 설정
-- [ ] 주요 컴포넌트 단위 테스트
-- [ ] 주요 훅 테스트
+- [x] Vitest 설정
+- [x] React Testing Library 설정
+- [x] 주요 컴포넌트 단위 테스트
+- [x] 주요 훅 테스트
 - [ ] E2E 테스트 설정 (Playwright)
 
 ### 9.2 성능 최적화
