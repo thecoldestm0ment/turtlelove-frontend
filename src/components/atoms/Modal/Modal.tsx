@@ -12,16 +12,21 @@ import { X } from 'lucide-react';
 import { type ReactNode } from 'react';
 import { cn } from '@/shared/utils/cn';
 
-export interface ModalProps extends DialogProps {
+// 기본 props (항상 필요)
+type BaseModalProps = {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   trigger?: ReactNode;
-  title?: string;
   description?: string;
-  /** 명시적인 ARIA 레이블 (title이 없을 때 모달의 접근성 이름으로 사용) */
-  ariaLabel?: string;
   children: ReactNode;
-}
+};
+
+// Discriminated union: title 또는 ariaLabel 중 하나는 필수
+// WCAG 2.1 SC 4.1.2 준수를 위해 모달에 접근성 이름이 항상 있어야 함
+export type ModalProps = BaseModalProps & Omit<DialogProps, 'title'> & (
+  | { title: string; ariaLabel?: never } // title 사용 시 ariaLabel 불가
+  | { title?: never; ariaLabel: string } // ariaLabel 사용 시 title 불가
+);
 
 export function Modal({
   open,
@@ -33,6 +38,16 @@ export function Modal({
   children,
   ...props
 }: ModalProps) {
+  // 개발 모드에서 런타임 검증
+  if (process.env.NODE_ENV === 'development') {
+    if (!title && !ariaLabel) {
+      console.warn(
+        'Modal: title 또는 ariaLabel 중 하나는 필수입니다. ' +
+          '모달에 접근성 이름이 없어 WCAG 2.1 SC 4.1.2를 위반할 수 있습니다.'
+      );
+    }
+  }
+
   return (
     <DialogRoot
       open={open}
@@ -130,7 +145,11 @@ function DialogClose() {
           'text-text-muted',
           'transition-colors',
           'hover:bg-soft-gray',
-          'hover:text-text-primary'
+          'hover:text-text-primary',
+          'focus-visible:outline-none',
+          'focus-visible:ring-2',
+          'focus-visible:ring-primary',
+          'focus-visible:ring-offset-2'
         )}
         aria-label="대화 상자 닫기"
       >

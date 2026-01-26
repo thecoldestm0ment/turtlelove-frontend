@@ -189,6 +189,7 @@ describe('Modal 접근성', () => {
 
     it('title과 ariaLabel이 둘 다 있으면 title이 우선되어야 함', () => {
       render(
+        // @ts-expect-error - 둘 다 제공하는 것은 타입 오류지만, 우선순위 테스트를 위해 허용
         <Modal open title="명시적 제목" ariaLabel="대체 레이블">
           <p>내용</p>
         </Modal>
@@ -196,17 +197,6 @@ describe('Modal 접근성', () => {
       const dialog = screen.getByRole('dialog', { name: '명시적 제목' });
       expect(dialog).toBeInTheDocument();
       expect(dialog).not.toHaveAttribute('aria-label');
-    });
-
-    it('title도 ariaLabel도 없으면 접근성 이름이 없어야 함', () => {
-      render(
-        <Modal open>
-          <p>내용</p>
-        </Modal>
-      );
-      const dialog = screen.getByRole('dialog');
-      expect(dialog).toBeInTheDocument();
-      expect(screen.queryByRole('dialog', { name: /./ })).not.toBeInTheDocument();
     });
   });
 });
