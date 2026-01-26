@@ -6,6 +6,7 @@ import {
   Trigger as DialogTrigger,
   Title as DialogTitle,
   Description as DialogDescription,
+  Close as DialogClosePrimitive,
 } from '@radix-ui/react-dialog';
 import { X } from 'lucide-react';
 import { type ReactNode } from 'react';
@@ -113,23 +114,25 @@ function DialogHeader({ children }: { children: ReactNode }) {
 
 function DialogClose() {
   return (
-    <button
-      type="button"
-      className={cn(
-        'absolute',
-        'right-4',
-        'top-4',
-        'rounded-full',
-        'p-1',
-        'text-text-muted',
-        'transition-colors',
-        'hover:bg-soft-gray',
-        'hover:text-text-primary'
-      )}
-      aria-label="대화 상자 닫기"
-    >
-      <X className="h-5 w-5" aria-hidden="true" />
-    </button>
+    <DialogClosePrimitive asChild>
+      <button
+        type="button"
+        className={cn(
+          'absolute',
+          'right-4',
+          'top-4',
+          'rounded-full',
+          'p-1',
+          'text-text-muted',
+          'transition-colors',
+          'hover:bg-soft-gray',
+          'hover:text-text-primary'
+        )}
+        aria-label="대화 상자 닫기"
+      >
+        <X className="h-5 w-5" aria-hidden="true" />
+      </button>
+    </DialogClosePrimitive>
   );
 }
 

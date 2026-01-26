@@ -2,13 +2,14 @@ import { usePosts } from '@/features/posts/hooks';
 import { PostList } from '@/features/posts/components';
 import { Button } from '@/components/atoms/Button';
 import { Link } from 'react-router-dom';
-import { useState, type KeyboardEvent } from 'react';
+import { useRef, useState, type KeyboardEvent } from 'react';
 
 const CATEGORIES = ['전체', '연애', '이별', '썸', '짝사랑', '고민', '자유'];
 
 export function PostListPage() {
   const { data, isLoading } = usePosts();
   const [selectedCategory, setSelectedCategory] = useState('전체');
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
   const handleTabKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     const currentIndex = CATEGORIES.indexOf(selectedCategory);
@@ -18,6 +19,7 @@ export function PostListPage() {
       const newIndex =
         (currentIndex + direction + CATEGORIES.length) % CATEGORIES.length;
       setSelectedCategory(CATEGORIES[newIndex]);
+      tabRefs.current[newIndex]?.focus();
     }
   };
 
@@ -49,6 +51,9 @@ export function PostListPage() {
             {CATEGORIES.map((cat, index) => (
               <button
                 key={cat}
+                ref={(el) => {
+                  tabRefs.current[index] = el;
+                }}
                 role="tab"
                 aria-selected={cat === selectedCategory}
                 aria-controls="posts-panel"

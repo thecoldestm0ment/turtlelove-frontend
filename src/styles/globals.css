@@ -44,12 +44,10 @@
   /* Focus visible */
   *:focus-visible {
     @apply outline-2 outline-offset-2 outline-rose;
-    outline-radius: 12px;
   }
 
   /* 링크 전용 포커스 스타일 */
   a:focus-visible {
-    outline-radius: 8px;
     outline-offset: 4px;
   }
 
