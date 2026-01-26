@@ -32,6 +32,8 @@ export interface LoginRequest {
 export interface LoginResponse {
   accessToken: string;
   refreshToken: string;
+  /** Demo 모드에서만 사용 (실제 API에는 없음) */
+  user?: User;
 }
 
 // 토큰 갱신
