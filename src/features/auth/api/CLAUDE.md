@@ -7,6 +7,6 @@
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
-| #1687 | 10:21 PM | 🔵 | API specification confirms login response only includes tokens | ~399 |
-| #1686 | " | 🔵 | Login API specification documented in API-Spec.md | ~268 |
+| #1685 | 10:20 PM | 🔵 | Demo login failure root causes identified through comprehensive analysis | ~428 |
+| #1677 | 10:19 PM | 🔵 | Auth API uses standard REST endpoints | ~292 |
 </claude-mem-context>

@@ -1,5 +1,11 @@
 import { Client, StompSubscription, type IMessage, type Frame } from '@stomp/stompjs';
 import type { SendMessagePayload, ChatMessageSubscription } from '../types/chat.types';
+import { isDemoMode } from '@/shared/config/env';
+import {
+  ChatSocketServiceMock,
+  getMockChatSocketService,
+  resetMockChatSocketService,
+} from './chatSocketMock';
 
 // WebSocket Configuration
 const WS_URL = import.meta.env.VITE_WS_URL ?? 'ws://localhost:8080/ws';
@@ -169,7 +175,13 @@ export class ChatSocketService {
 // Singleton 패턴
 let socketServiceInstance: ChatSocketService | null = null;
 
-export function getChatSocketService(callbacks: ChatSocketCallbacks): ChatSocketService {
+export function getChatSocketService(callbacks: ChatSocketCallbacks): ChatSocketService | ChatSocketServiceMock {
+  // Demo 모드 분기
+  if (isDemoMode()) {
+    return getMockChatSocketService(callbacks);
+  }
+
+  // 실제 WebSocket 서비스
   if (!socketServiceInstance) {
     socketServiceInstance = new ChatSocketService(callbacks);
   } else {
@@ -179,6 +191,11 @@ export function getChatSocketService(callbacks: ChatSocketCallbacks): ChatSocket
 }
 
 export function resetChatSocketService(): void {
+  if (isDemoMode()) {
+    resetMockChatSocketService();
+    return;
+  }
+
   if (socketServiceInstance) {
     socketServiceInstance.disconnect();
     socketServiceInstance = null;

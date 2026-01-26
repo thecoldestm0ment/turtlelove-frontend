@@ -7,6 +7,5 @@
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
-| #1687 | 10:21 PM | 🔵 | API specification confirms login response only includes tokens | ~399 |
-| #1686 | " | 🔵 | Login API specification documented in API-Spec.md | ~268 |
+| #1694 | 10:25 PM | 🔴 | Mock API login handler now returns user data | ~296 |
 </claude-mem-context>

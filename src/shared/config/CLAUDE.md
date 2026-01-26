@@ -7,6 +7,6 @@
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
-| #1687 | 10:21 PM | 🔵 | API specification confirms login response only includes tokens | ~399 |
-| #1686 | " | 🔵 | Login API specification documented in API-Spec.md | ~268 |
+| #1699 | 10:32 PM | 🟣 | Phase 10.1: Complete Demo Mode Implementation with Environment Separation | ~761 |
+| #1697 | 10:28 PM | 🟣 | Phase 10.1: Production Build Optimization & Demo Environment Implementation | ~440 |
 </claude-mem-context>
