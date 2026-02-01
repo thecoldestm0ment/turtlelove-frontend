@@ -91,6 +91,84 @@ npm run preview:demo
 
 빌드된 Demo 애플리케이션을 미리볼 수 있습니다.
 
+## Docker 사용법
+
+프로젝트는 Docker 컨테이너로 실행할 수 있습니다.
+
+### 필수 요구사항
+
+- Docker 20.10 이상
+- Docker Compose (선택사항)
+
+### Docker 이미지 빌드
+
+```bash
+# Demo 모드 빌드 (백엔드 불필요)
+docker build -t turtlelove-frontend:demo \
+  --build-arg BUILD_MODE=demo \
+  --build-arg VITE_API_URL=mock \
+  --build-arg VITE_WS_URL=mock \
+  .
+
+# Production 모드 빌드 (백엔드 필요)
+docker build -t turtlelove-frontend:latest \
+  --build-arg BUILD_MODE=production \
+  --build-arg VITE_API_URL=/api \
+  --build-arg VITE_WS_URL=/ws \
+  .
+```
+
+### Docker 컨테이너 실행
+
+```bash
+# Demo 모드 실행
+docker run -d -p 3000:8080 --name turtlelove-demo turtlelove-frontend:demo
+
+# 브라우저에서 접속
+open http://localhost:3000
+```
+
+### Docker Compose 사용
+
+```bash
+# Demo 모드 실행 (백엔드 없이)
+docker-compose up demo
+
+# Production 모드 실행 (백엔드 필요)
+docker-compose --profile production up app
+
+# 로그 확인
+docker-compose logs -f demo
+
+# 중지
+docker-compose down
+```
+
+### 컨테이너 상태 확인
+
+```bash
+# 실행 중인 컨테이너 확인
+docker ps
+
+# 컨테이너 로그 확인
+docker logs turtlelove-demo
+
+# Health check 확인
+curl http://localhost:3000/health
+```
+
+### 주요 포트
+
+| 서비스 | 컨테이너 포트 | 호스트 포트 | URL |
+|--------|--------------|------------|-----|
+| Frontend (nginx) | 8080 | 3000 | http://localhost:3000 |
+
+### Docker 이미지 정보
+
+- **기본 이미지**: nginx:alpine
+- **최종 이미지 크기**: 약 62.6 MB
+- **Health Check**: 자동으로 컨테이너 상태 감시
+
 ## 주요 스크립트
 
 | 명령어 | 설명 |
